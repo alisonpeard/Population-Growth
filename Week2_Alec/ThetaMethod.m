@@ -1,18 +1,23 @@
 clear all;
 theta = 1/2;
+k = 0.2;
+u0vec = [0.1:0.05:1];
 
 Tmax = 10;
-h = 1e-4;
+
+hvec = [1e-6,1e-4,1e-3,1e-2,1e-1];
+
+Umat = zeros(1,length(hvec));
+Ymat = zeros(1,length(hvec));
+
+for index = 1:length(hvec)
+disp(index);
+h = hvec(index);
 N = ceil(Tmax/h);
 time = 0:h:Tmax;
-
-
 uvec = zeros(N,1);
 yvec = zeros(N,1);
 
-k = 0.2;
-
-u0vec = [0.1:0.05:1];
 
 for j = 1:length(u0vec)
     u0 = u0vec(j);
@@ -29,7 +34,7 @@ for i = 2:N+1
    yvec(i) = y0;
 end
     
-    plot(time,uvec)
+    %plot(time,uvec)
     [umax,ind] = findpeaks(uvec);
     yc = yvec(ind);
     if isempty(umax)
@@ -41,8 +46,14 @@ end
     hold all
 end
 
-[yvec,uvec] = preds(k,u0);
+[yvec,uvec] = preds(k,u0vec);
 
+unorm = norm(uvec-umaxvec);
+ynorm = norm(yvec-ycvec);
+
+Umat(index) = unorm;
+Ymat(index) = ynorm;
+end
 clf;
 figure(1)
 plot(u0vec,umaxvec,u0vec,uvec)
