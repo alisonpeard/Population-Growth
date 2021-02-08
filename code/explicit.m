@@ -7,7 +7,7 @@ k0 = 0;kstep=1;kend=5;
 subplot(1,2,1);
 
 U0 = 0.5;
-for k = k0:kstep:kend
+for kappa = k0:kstep:kend
 
     Tn = 0;
     U = zeros(1,N);
@@ -17,7 +17,7 @@ for k = k0:kstep:kend
 
     for n=1:N
         Un = U(n);
-        U(n+1) = Un + h * Un*(1-Un-Tn)/k;
+        U(n+1) = Un + h * Un*(1-Un-Tn)/kappa;
         Tn = Tn + h * (Un + U(n+1))/2;
     end
 
@@ -27,12 +27,12 @@ end
 
 title('Explicit solution with composite trapezoidal, U0 = ' + string(U0))
 K = k0:kstep:kend;
-legendStrings = "k = " + string(K);
+legendStrings = "kappa = " + string(K);
 legend(legendStrings)
 
 subplot(1,2,2);
 U0 = 1.5;
-for k = k0:kstep:kend
+for kappa = k0:kstep:kend
 
     Tn = 0;
     U = zeros(1,N);
@@ -42,7 +42,7 @@ for k = k0:kstep:kend
 
     for n=1:N
         Un = U(n);
-        U(n+1) = Un + h * Un*(1-Un-Tn)/k;
+        U(n+1) = Un + h * Un*(1-Un-Tn)/kappa;
         Tn = Tn + h * (Un + U(n+1))/2;
     end
 
@@ -52,7 +52,7 @@ end
 
 title('Explicit solution with composite trapezoidal, U0 = ' + string(U0))
 K = k0:kstep:kend;
-legendStrings = "k = " + string(K);
+legendStrings = "kappa = " + string(K);
 legend(legendStrings)
 
 saveas(gcf,'explicit_ali.jpeg')
