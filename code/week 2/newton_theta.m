@@ -1,9 +1,14 @@
 % Theta method with Newton
-Tfinal = 10;
-N = 100; % number of timesteps to take
-h = Tfinal/N; % timestep
-k0 = 0;kstep=1;kend=5;
-subplot(1,2,1);
+figure(1)
+Tfinal = 20;
+N = 100; % # timesteps
+h = Tfinal/N; % timestep size
+k0 = 1;kstep=1;kend=5;
+subplot(2,2,1);
+
+theta = 1/2;
+% theta = 1 => implicit Euler
+% theta = 0 => explicit Euler
 
 U0 = 0.5;
 U0_vec = [U0; 0];
@@ -21,7 +26,7 @@ for kappa = k0:kstep:kend
 
     for n=1:N
         Un = U(:,n);
-        U(:,n+1) = mynewton(Un,h, kappa);
+        U(:,n+1) = mynewton(Un, h, kappa, theta);
     end
     
     klog = kappa*log(kappa/(1+kappa-U0));
@@ -39,13 +44,21 @@ K = k0:kstep:kend;
 legendStrings = "kappa = " + string(K);
 legend(legendStrings)
 
-figure(2)
+
+%%
+subplot(2,2,3);
 plot(K(2:end),Umax_vec(1,2:end),K(2:end),Umax_theor(1,2:end));
-legend(["numerical max", "analytic max"])
-title("max of U")
+legend(["numerical max", "theoretical max"])
+title("max of U comparison, U0 = " + string(U0))
+
+subplot(2,2,4);
+plot(K(2:end),Umax_vec(2,2:end),K(2:end),Umax_theor(2,2:end));
+legend(["numerical max", "theoretical max"])
+title("max of Y comparison, U0 = " + string(U0))
+
 
 %% U0 = 1.5
-subplot(1,2,2);
+subplot(2,2,2);
 U0 = 1.5;
 U0_vec = [U0; 0];
 
@@ -59,7 +72,7 @@ for kappa = k0:kstep:kend
 
     for n=1:N
         Un = U(:,n);
-        U(:,n+1) = mynewton(Un,h, kappa);
+        U(:,n+1) = mynewton(Un,h, kappa, theta);
     end
 
     plot(steps,U(1,:));
@@ -71,4 +84,6 @@ K = k0:kstep:kend;
 legendStrings = "kappa = " + string(K);
 legend(legendStrings)
 
-saveas(gcf,'newton_ali.jpeg')
+saveas(gcf,'newton_plots.jpeg')
+
+hold off;
