@@ -1,27 +1,29 @@
 % Crank-Nicolson (order 2)
-% not really fixed
+% vec = cn2(x0,h,k)
 
 function x0 = cn2(x0, delta_t, kappa)
+% fix order of y,u to match
 
     k = kappa;
     h = delta_t;
     
-    Un = x0(1);
-    Yn = x0(2);
+    Y0 = x0(1); % mixed these up a little
+    U0 = x0(2);
     
-    f = @(x,y) [x - Un - h*((1-theta)*Un*(1-Un-Yn)+theta*x*(1-x-y))/k; y - Yn - h*((1-theta)*Un + theta*x)];
+    f = @(y,u) [y - Y0 - (h/2)*(u+U0); u - U0 - (h/2)*( (u/k)*(1-u-y) + (U0/k)*(1-U0-Y0))];
     
-    fdx = @(x,y) [1 - h*theta*(1-2*x-y)/k; -h*theta*x];
-    fdy = @(x,y) [h*theta*x/k; 1];   
-    J = @(x,y) [fdx(x,y) fdy(x,y)];                 
+    fdy = @(y,u) [1; (h/2)*(u/k)];   
+    fdu = @(y,u) [-h/2; 1 - (h/2)*(1 - 2*u - y)/k];
 
-    x = x0(1); y = x0(2);                      
+    J = @(y,u) [fdy(y,u) fdu(y,u)];                 
+
+    y = x0(1); u = x0(2);                      
 
     TOL = 1e-12; counter = 0;
     
-    while ( norm(f(x,y)) > TOL && counter < 500  )   
-        x = x0(1); y = x0(2);                       
-        x0 = x0 - J(x,y)\f(x,y);                  
+    while ( norm(f(y,u)) > TOL && counter < 500  )   
+        y = x0(1); u = x0(2);                       
+        x0 = x0 - J(y,u)\f(y,u);                  
         counter = counter + 1;
     end
   
