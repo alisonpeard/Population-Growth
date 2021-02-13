@@ -34,3 +34,5 @@ for i = 3:N+1
     v1 = v2;
     
 end
+
+plot(time,uvec)

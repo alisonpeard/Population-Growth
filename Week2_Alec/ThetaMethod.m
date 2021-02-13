@@ -1,5 +1,5 @@
 clear all;
-theta = 1/2;
+theta = 0;
 k = 0.2;
 u0vec = [0.1:0.05:1];
 
@@ -54,6 +54,12 @@ ynorm = norm(yvec-ycvec);
 Umat(index) = unorm;
 Ymat(index) = ynorm;
 end
+%%
+plot(hvec,Umat,hvec,Ymat);
+xlabel('Time step')
+ylabel('Norm of difference')
+legend('U_{max}','y_c')
+%%
 clf;
 figure(1)
 plot(u0vec,umaxvec,u0vec,uvec)
