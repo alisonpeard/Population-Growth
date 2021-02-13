@@ -1,4 +1,5 @@
 % AB2 method
+% seems much less effective at umax preds?
 
 subplot(2,2,1);
 
@@ -30,8 +31,11 @@ for kappa = k0:kstep:kend
     
     klog = kappa*log(kappa/(1+kappa-U0));
     Umax_theor(:,i) = [1+klog; -klog];
-    Umax_vec(1,i) = max(U(1,:));
-    Umax_vec(2,i) = max(U(2,:));
+    
+    Umax_vec(1,i) = max(U(2,:));
+    ix = find(U(2,:)==Umax_vec(1,i));
+    Umax_vec(2,i) = U(1,ix);
+    
     i = i+1;
 
     plot(steps,U(2,:));
@@ -47,9 +51,11 @@ legend(legendStrings)
 subplot(2,2,3);
 plot(K(2:end),Umax_vec(1,2:end),K(2:end),Umax_theor(1,2:end));
 legend(["numerical max", "theoretical max"])
+ylabel("log scale");
 title("max of U comparison, U0 = " + string(U0))
 
 subplot(2,2,4);
 plot(K(2:end),Umax_vec(2,2:end),K(2:end),Umax_theor(2,2:end));
 legend(["numerical max", "theoretical max"])
+ylabel("log scale");
 title("max of Y comparison, U0 = " + string(U0))
