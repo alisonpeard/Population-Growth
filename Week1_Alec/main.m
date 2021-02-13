@@ -1,10 +1,10 @@
 clear all;
 gcf;
 hold on
-theta = 0;
+theta = 1/2;
 
-Tmax = 3;
-h = 1e-8;
+Tmax = 10;
+h = 1e-2;
 N = ceil(Tmax/h);
 time = 0:h:Tmax;
 
@@ -16,7 +16,7 @@ Tvec = zeros(N,1);
 kvec = 0.2;
 for j = 1:length(kvec)
     k = kvec(j);
-    u0 = 0.5;
+    u0 = 0.1;
     T0 = 0;
     uvec(1) = u0;
     Tvec(1) = T0;
