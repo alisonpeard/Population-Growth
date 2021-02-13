@@ -23,7 +23,7 @@ U0_vec = [0; u0];
 
 j = 1;
 for kappa = k0:kstep:kend
-    
+
     h0 = horig;
     hvec = [h0; h0];
     Un_1 = U0_vec;
@@ -33,9 +33,9 @@ for kappa = k0:kstep:kend
     n = 2;
     t(1) = 0;
     t(2) = horig;
-    
+
     while t(n)<Tfinal
-        
+
         h0 = hvec(n);
         [Utr, Uab] = integrate(Un, Un_1, h0, kappa);
         E = abs(ctr/(cab-ctr)) * norm(Utr - Uab,2);
@@ -49,7 +49,7 @@ for kappa = k0:kstep:kend
             U = [U Un];
             t(n+1) = t(n)+h0;
             n = n+1;
-            
+
 
         elseif E < (1/10)*h0*TOL && E<=h0*TOL
         % accept step, double timestep for next time
@@ -57,11 +57,11 @@ for kappa = k0:kstep:kend
             h0 = 2*h0;
             hvec(n+1) = h0;
             hsum = 0; i = 0;
-            
+
             % reverse interpolation
             Un_1 = 2*Un - Uab;
             Un = Uab;
-            
+
             U = [U Un];
             t(n+1) = t(n)+h0;
             n = n+1;
@@ -75,7 +75,7 @@ for kappa = k0:kstep:kend
 
         end
     end
-    
+
     % calculate max and critical point
     klog = kappa*log(kappa/(1+kappa-u0));
     Umax_theor(:,j) = [1+klog; -klog];
@@ -92,15 +92,15 @@ for kappa = k0:kstep:kend
     for m = 2:M
         steps(m) = steps(m-1) + hvec(m);
     end
-    
+
     subplot(2,2,1);
     plot(steps,U(2,:))
     hold on;
-    
+
     subplot(2,2,2)
     plot(steps, hvec,'-*')
     hold on;
-    
+
 end
 
 subplot(2,2,1);
@@ -135,7 +135,10 @@ hold off;
 
 %%
 
+<<<<<<< HEAD
 function [Utr, Uab] = integrate(Un, Un_1, h, kappa)
     Utr = theta_method(Un, h, kappa, 1/2);
     Uab = ab2(Un_1, Un, h, kappa);
 end
+=======
+>>>>>>> 870a62ecd704f65ab164894e2b2884a5a84b67d2
