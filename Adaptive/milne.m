@@ -1,9 +1,9 @@
 clear all;
-u0 = 0.1;
+u0 = 0.5;
 y0 = 0;
-k = 0.2;
-h0 = 1e-8;
-tol = 0.1;
+k = 6;
+h0 = 0.1;
+tol = 10^-5;
 Tmax = 10;
 c = -1/12;
 chat = 5/12;
@@ -26,7 +26,7 @@ while t<Tmax
     E = 10*h*tol;
     while E > h*tol
         % Theta
-        v2 = theta_method(v0,h,k,theta)';
+        v2 = theta_method(v1,h,k,theta)';
         % AB
         v2hat = ab_method(v0,v1,h,func);
         v0 = v1;
