@@ -10,7 +10,7 @@ Tfinal = 10;
 h0 = 0.1;
 hvec = [h0 ; h0];
 
-k = 0.2;
+kappa = 0.2;
 TOL = 10^-5;
 
 % algorithm
@@ -18,7 +18,7 @@ Tn = 0;
 U0_vec = [0;u0];
 
 Un_1 = U0_vec;
-Un = cn2(U0_vec,h0,kappa);
+Un = theta_method(U0_vec,h0,kappa,theta);
 U = [Un_1 Un];
 theta = 1/2;
 n = 2;
