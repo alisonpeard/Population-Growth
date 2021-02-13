@@ -1,5 +1,5 @@
 clear all;
-theta = 0;
+theta = 1/2;
 k = 0.2;
 u0vec = [0.1:0.05:1];
 
