@@ -20,13 +20,13 @@ U0_vec = [0;u0];
 Un_1 = U0_vec;
 Un = cn2(U0_vec,h0,kappa);
 U = [Un_1 Un];
-
+theta = 1/2;
 n = 2;
 t = 0;
 while t<Tfinal
     
     h0 = hvec(n);
-    [Utr, Uab] = integrate(Un, Un_1, h0, kappa);
+    [Utr, Uab] = integrate(Un, Un_1, h0, kappa,theta);
     E = abs(ctr/(cab-ctr)) * norm(Utr - Uab,2);
     
     if E > (1/10)*h0*TOL && E<=h0*TOL % accept step, keep timestep
@@ -66,7 +66,3 @@ end
 
 plot(steps,U(2,:))
 
-function [Utr, Uab] = integrate(Un, Un_1, h, kappa)
-    Utr = cn2(Un, h, kappa);
-    Uab = ab2(Un,Un_1, h, kappa);
-end
