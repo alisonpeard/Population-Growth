@@ -1,7 +1,7 @@
 clear all;
 gcf;
 hold on
-theta = 1/2;
+theta = 0.5;
 
 Tmax = 10;
 h = 1e-2;
@@ -13,10 +13,10 @@ uvec = zeros(N,1);
 Tvec = zeros(N,1);
 
 
-kvec = 0.2;
+kvec = [0.5, 1, 1.5];
 for j = 1:length(kvec)
     k = kvec(j);
-    u0 = 0.1;
+    u0 = 1.5;
     T0 = 0;
     uvec(1) = u0;
     Tvec(1) = T0;
